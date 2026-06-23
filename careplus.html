@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CarePlus Hospital Advanced Healthcare</title>
+<meta name="description" content="CarePlus Hospital delivers trusted, compassionate healthcare with world-class specialists and modern facilities."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+/* ── TOKENS ── */
+:root{
+  --navy:    #04293A;
+  --navy2:   #062E44;
+  --aqua:    #06BEE1;
+  --aqua-lt: #3DD6F5;
+  --aqua-dim:rgba(6,190,225,.10);
+  --aqua-glow:rgba(6,190,225,.30);
+  --white:   #FFFFFF;
+  --ice:     #F0F8FF;
+  --ice2:    #E3F4FA;
+  --text:    #1A2B3C;
+  --muted:   #5A7A8A;
+  --border:  rgba(6,190,225,.18);
+  --serif:   'Fraunces', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --ease:    cubic-bezier(.16,1,.3,1);
+  --nav-h:   72px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text);font-family:var(--sans);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+ul{list-style:none;}
+::selection{background:var(--aqua);color:#fff;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--ice);}
+::-webkit-scrollbar-thumb{background:var(--aqua);border-radius:99px;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal-left.visible{opacity:1;transform:none;}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal-right.visible{opacity:1;transform:none;}
+
+/* ── PROGRESS BAR ── */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--aqua);z-index:9999;width:0;transition:width .1s;}
+
+/* ── NAV ── */
+#navbar{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:rgba(255,255,255,.0);
+  transition:background .35s,box-shadow .35s;
+}
+#navbar.scrolled{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 2px 30px rgba(4,41,58,.08);
+}
+.nav-logo{
+  font-family:var(--serif);font-size:1.55rem;font-weight:600;color:var(--white);
+  transition:color .3s;
+  display:flex;align-items:center;gap:.35rem;
+}
+#navbar.scrolled .nav-logo{color:var(--navy);}
+.nav-logo .logo-dot{color:var(--aqua);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;}
+.nav-links a{
+  font-size:.85rem;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.85);
+  position:relative;transition:color .25s;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--aqua);transition:width .25s var(--ease);}
+.nav-links a:hover{color:#fff;}
+.nav-links a:hover::after{width:100%;}
+#navbar.scrolled .nav-links a{color:var(--muted);}
+#navbar.scrolled .nav-links a:hover{color:var(--navy);}
+.nav-cta{
+  padding:.55rem 1.4rem;background:var(--aqua);color:var(--navy) !important;
+  border-radius:99px;font-weight:600;font-size:.82rem;letter-spacing:.03em;
+  transition:background .2s,box-shadow .2s,transform .2s !important;
+  box-shadow:0 4px 18px var(--aqua-glow);
+}
+.nav-cta::after{display:none !important;}
+.nav-cta:hover{background:var(--aqua-lt) !important;transform:translateY(-2px) !important;box-shadow:0 8px 28px var(--aqua-glow) !important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:99px;transition:all .3s;}
+#navbar.scrolled .hamburger span{background:var(--navy);}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* mobile menu */
+#mobile-menu{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--navy);
+  flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+}
+#mobile-menu.open{display:flex;}
+#mobile-menu a{font-family:var(--serif);font-size:1.8rem;color:#fff;transition:color .2s;}
+#mobile-menu a:hover{color:var(--aqua);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:calc(var(--nav-h) + 3rem) 6% 4rem;
+  position:relative;overflow:hidden;
+  background:linear-gradient(140deg, #04293A 0%, #06425F 50%, #07516F 100%);
+}
+
+/* Animated ECG line */
+.ecg-wrap{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+  opacity:.18;
+}
+.ecg-wrap svg{position:absolute;bottom:18%;left:0;width:200%;height:120px;}
+.ecg-path{
+  stroke:var(--aqua);stroke-width:2;fill:none;
+  stroke-dasharray:2400;stroke-dashoffset:2400;
+  animation:ecg-draw 4s var(--ease) forwards .4s, ecg-loop 8s linear infinite 4.4s;
+}
+@keyframes ecg-draw{to{stroke-dashoffset:0;}}
+@keyframes ecg-loop{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* Soft radial glow */
+.hero-glow{
+  position:absolute;right:-10%;top:10%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(6,190,225,.12) 0%,transparent 70%);
+  pointer-events:none;
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+/* Grid dots */
+.hero-dots{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(6,190,225,.15) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 70% 80% at 80% 50%,black 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 80% at 80% 50%,black 20%,transparent 80%);
+}
+
+.hero-inner{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;width:100%;max-width:1280px;margin:auto;
+}
+
+.hero-left{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--aqua);margin-bottom:1.5rem;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--aqua);}
+
+.hero-h1{
+  font-family:var(--serif);font-size:clamp(2.8rem,5vw,4.2rem);
+  font-weight:400;line-height:1.1;color:#fff;margin-bottom:1.5rem;letter-spacing:-.01em;
+}
+.hero-h1 em{font-style:italic;color:var(--aqua-lt);}
+
+.hero-body{
+  font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.65);
+  line-height:1.85;max-width:480px;margin-bottom:2.4rem;
+}
+
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+.btn-fill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 2rem;background:var(--aqua);color:var(--navy);
+  border-radius:99px;font-weight:600;font-size:.9rem;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  box-shadow:0 6px 24px var(--aqua-glow);
+}
+.btn-fill:hover{background:var(--aqua-lt);transform:translateY(-2px);box-shadow:0 10px 32px var(--aqua-glow);}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 2rem;background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.25);border-radius:99px;font-weight:500;font-size:.9rem;
+  transition:border-color .2s,background .2s,transform .2s;
+}
+.btn-outline:hover{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06);transform:translateY(-2px);}
+
+/* Hero stats strip */
+.hero-stats{
+  display:flex;gap:2.5rem;padding-top:2rem;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.hero-stat-n{
+  font-family:var(--serif);font-size:2rem;font-weight:400;color:#fff;line-height:1;
+}
+.hero-stat-n sup{font-size:1rem;color:var(--aqua);}
+.hero-stat-l{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.3rem;}
+
+/* Hero image side */
+.hero-right{position:relative;display:flex;justify-content:center;}
+.hero-img-frame{
+  position:relative;border-radius:24px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,.35);
+  border:1px solid rgba(6,190,225,.2);
+}
+.hero-img-frame img{width:100%;max-width:520px;display:block;object-fit:cover;aspect-ratio:4/5;}
+/* Floating badge */
+.hero-badge{
+  position:absolute;bottom:2rem;left:-2rem;
+  background:var(--white);border-radius:14px;
+  padding:1rem 1.4rem;display:flex;align-items:center;gap:.9rem;
+  box-shadow:0 16px 48px rgba(4,41,58,.18);
+}
+.hero-badge-icon{
+  width:44px;height:44px;border-radius:50%;background:rgba(6,190,225,.12);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  color:var(--aqua);flex-shrink:0;
+}
+.hero-badge-text{font-size:.78rem;font-weight:600;color:var(--navy);}
+.hero-badge-sub{font-size:.68rem;color:var(--muted);font-weight:400;}
+.hero-badge2{
+  position:absolute;top:2rem;right:-2rem;
+  background:var(--navy2);border-radius:14px;
+  padding:.9rem 1.2rem;display:flex;align-items:center;gap:.8rem;
+  box-shadow:0 16px 48px rgba(0,0,0,.25);
+  border:1px solid rgba(6,190,225,.15);
+}
+.hero-badge2-dot{width:8px;height:8px;border-radius:50%;background:#22d55a;flex-shrink:0;box-shadow:0 0 8px #22d55a;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-badge2-text{font-size:.78rem;color:#fff;font-weight:500;}
+
+/* scroll cue */
+.scroll-cue{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  color:rgba(255,255,255,.3);z-index:1;
+  animation:scuebounce 2s ease-in-out infinite;
+}
+.scroll-cue span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;}
+.scroll-cue svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+@keyframes scuebounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* ── SHARED SECTION STYLES ── */
+.s{padding:7rem 6%;}
+.s-alt{background:var(--ice);}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--aqua);margin-bottom:1rem;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--aqua);}
+.s-title{
+  font-family:var(--serif);font-size:clamp(1.9rem,3.5vw,2.9rem);
+  font-weight:400;line-height:1.15;color:var(--navy);letter-spacing:-.01em;
+}
+.s-title em{font-style:italic;color:var(--aqua);}
+.s-sub{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:560px;margin-top:.8rem;}
+.s-head{margin-bottom:3.5rem;}
+.s-head.center{text-align:center;}
+.s-head.center .eyebrow{justify-content:center;}
+.s-head.center .s-sub{margin:auto;margin-top:.8rem;}
+
+/* ── TRUST BAR ── */
+#trust{
+  background:var(--navy);padding:2rem 6%;
+  display:flex;align-items:center;justify-content:center;gap:4rem;flex-wrap:wrap;
+}
+.trust-item{display:flex;align-items:center;gap:.8rem;color:rgba(255,255,255,.55);}
+.trust-item i{color:var(--aqua);font-size:1.1rem;}
+.trust-item span{font-size:.82rem;font-weight:500;letter-spacing:.04em;}
+
+/* ── SERVICES ── */
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;
+}
+.svc-card{
+  background:var(--white);border:1px solid rgba(4,41,58,.06);border-radius:18px;
+  padding:2.2rem 2rem;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.svc-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--aqua),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.svc-card:hover{border-color:rgba(6,190,225,.3);transform:translateY(-5px);box-shadow:0 20px 55px rgba(4,41,58,.09);}
+.svc-card:hover::before{opacity:1;}
+.svc-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--aqua-dim);display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--aqua);margin-bottom:1.3rem;
+  transition:background .25s;
+}
+.svc-card:hover .svc-icon{background:var(--aqua);color:var(--navy);}
+.svc-title{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--navy);margin-bottom:.6rem;}
+.svc-desc{font-size:.88rem;color:var(--muted);line-height:1.75;font-weight:300;}
+
+/* ── ABOUT ── */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.about-img-col{position:relative;}
+.about-img-main{
+  border-radius:24px;overflow:hidden;
+  box-shadow:0 24px 64px rgba(4,41,58,.12);
+}
+.about-img-main img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.about-img-accent{
+  position:absolute;bottom:-2rem;right:-2rem;width:46%;
+  border-radius:16px;overflow:hidden;border:4px solid var(--white);
+  box-shadow:0 16px 40px rgba(4,41,58,.14);
+}
+.about-img-accent img{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
+.about-stats-card{
+  position:absolute;top:2rem;left:-2.5rem;
+  background:var(--navy);border-radius:16px;padding:1.2rem 1.6rem;
+  box-shadow:0 16px 48px rgba(4,41,58,.3);border:1px solid rgba(6,190,225,.15);
+}
+.about-stat-n{font-family:var(--serif);font-size:2.2rem;color:#fff;line-height:1;}
+.about-stat-n span{color:var(--aqua);}
+.about-stat-l{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-top:.25rem;}
+
+.about-text p{font-size:.98rem;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:1.1rem;}
+.about-text p strong{color:var(--navy);font-weight:500;}
+.about-checks{display:flex;flex-direction:column;gap:.7rem;margin:1.8rem 0;}
+.check-item{display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);}
+.check-item::before{
+  content:'';width:20px;height:20px;border-radius:50%;
+  background:var(--aqua-dim);border:1.5px solid var(--aqua);flex-shrink:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306BEE1' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size:12px;background-position:center;background-repeat:no-repeat;
+}
+
+/* ── DOCTORS ── */
+.doctors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.8rem;}
+.doc-card{
+  background:var(--white);border-radius:20px;overflow:hidden;
+  border:1px solid rgba(4,41,58,.06);
+  transition:transform .25s,box-shadow .25s;
+  position:relative;
+}
+.doc-card:hover{transform:translateY(-6px);box-shadow:0 28px 70px rgba(4,41,58,.11);}
+.doc-img{position:relative;overflow:hidden;height:300px;}
+.doc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+.doc-card:hover .doc-img img{transform:scale(1.04);}
+.doc-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(4,41,58,.75) 0%,transparent 55%);
+}
+.doc-spec{
+  position:absolute;bottom:1rem;left:1rem;
+  padding:.3rem .8rem;background:var(--aqua);color:var(--navy);
+  border-radius:99px;font-size:.7rem;font-weight:600;letter-spacing:.05em;
+}
+.doc-body{padding:1.5rem;}
+.doc-name{font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:.2rem;}
+.doc-role{font-size:.8rem;color:var(--muted);}
+.doc-socials{display:flex;gap:.5rem;margin-top:1rem;}
+.doc-social{
+  width:32px;height:32px;border-radius:8px;border:1px solid rgba(4,41,58,.1);
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.doc-social:hover{border-color:var(--aqua);color:var(--aqua);background:var(--aqua-dim);}
+
+/* ── STATS BAND ── */
+#stats-band{background:linear-gradient(135deg,#04293A,#06425F);padding:5rem 6%;}
+.stats-inner{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+  max-width:900px;margin:auto;text-align:center;
+}
+.stat-box{padding:2rem;}
+.stat-num{
+  font-family:var(--serif);font-size:3rem;font-weight:400;color:#fff;line-height:1;
+}
+.stat-num sup{font-size:1.5rem;color:var(--aqua);}
+.stat-lbl{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.6rem;}
+.stat-divider{width:1px;background:rgba(255,255,255,.08);margin:auto;}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.testi-card{
+  background:var(--white);border:1px solid rgba(4,41,58,.06);border-radius:18px;
+  padding:2rem;position:relative;
+  transition:transform .25s,box-shadow .25s;
+}
+.testi-card:hover{transform:translateY(-4px);box-shadow:0 20px 55px rgba(4,41,58,.08);}
+.testi-quote{
+  font-size:3rem;font-family:var(--serif);color:var(--aqua);line-height:.8;
+  margin-bottom:.8rem;opacity:.5;
+}
+.testi-text{font-size:.92rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+.testi-author{display:flex;align-items:center;gap:.8rem;}
+.testi-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--aqua-dim);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--aqua);font-family:var(--serif);flex-shrink:0;
+}
+.testi-name{font-size:.88rem;font-weight:600;color:var(--navy);}
+.testi-stars{font-size:.7rem;color:#F5A623;margin-top:.1rem;}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start;}
+.contact-left p{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:2rem;}
+.contact-details{display:flex;flex-direction:column;gap:1rem;}
+.c-detail{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.2rem;background:var(--ice);border:1px solid rgba(4,41,58,.06);
+  border-radius:12px;transition:border-color .2s;
+}
+.c-detail:hover{border-color:var(--border);}
+.c-icon{
+  width:40px;height:40px;border-radius:10px;background:var(--aqua-dim);
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--aqua);flex-shrink:0;
+}
+.c-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.c-val{font-size:.88rem;font-weight:500;color:var(--navy);}
+
+.contact-form{
+  background:var(--navy);border-radius:24px;padding:2.5rem;
+  box-shadow:0 24px 64px rgba(4,41,58,.2);
+}
+.contact-form h3{
+  font-family:var(--serif);font-size:1.5rem;font-weight:400;color:#fff;margin-bottom:.4rem;
+}
+.contact-form p{font-size:.85rem;color:rgba(255,255,255,.45);margin-bottom:2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+.form-group label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:.8rem 1rem;
+  color:#fff;font-family:var(--sans);font-size:.9rem;font-weight:300;
+  outline:none;resize:none;
+  transition:border-color .2s,background .2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:rgba(255,255,255,.25);}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--aqua);background:rgba(6,190,225,.06);
+}
+.form-group select option{background:var(--navy2);color:#fff;}
+.form-group textarea{min-height:110px;}
+#formMsg{margin-top:.5rem;font-size:.82rem;display:none;}
+.btn-submit{
+  width:100%;padding:.9rem;background:var(--aqua);color:var(--navy);
+  border:none;border-radius:10px;font-weight:600;font-size:.9rem;
+  cursor:pointer;font-family:var(--sans);
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  box-shadow:0 6px 24px var(--aqua-glow);
+}
+.btn-submit:hover{background:var(--aqua-lt);transform:translateY(-2px);box-shadow:0 10px 32px var(--aqua-glow);}
+.btn-submit svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── FOOTER ── */
+footer{background:var(--navy2);padding:4rem 6% 2rem;}
+.footer-top{
+  display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;
+  gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.footer-brand .brand-name{
+  font-family:var(--serif);font-size:1.4rem;color:#fff;margin-bottom:.8rem;
+}
+.footer-brand .brand-name span{color:var(--aqua);}
+.footer-brand p{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.75;font-weight:300;max-width:260px;}
+.footer-col h4{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1.2rem;}
+.footer-col ul li{margin-bottom:.7rem;}
+.footer-col ul li a{font-size:.85rem;color:rgba(255,255,255,.55);transition:color .2s;}
+.footer-col ul li a:hover{color:var(--aqua);}
+.footer-socials{display:flex;gap:.6rem;margin-top:1.2rem;}
+.footer-social{
+  width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:rgba(255,255,255,.4);
+  transition:border-color .2s,color .2s;
+}
+.footer-social:hover{border-color:var(--aqua);color:var(--aqua);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+  padding-top:2rem;font-size:.78rem;color:rgba(255,255,255,.3);
+}
+.footer-bottom a{color:rgba(255,255,255,.3);transition:color .2s;}
+.footer-bottom a:hover{color:var(--aqua);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero-inner,.about-wrap,.contact-wrap{grid-template-columns:1fr;gap:3.5rem;}
+  .hero-right{display:none;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .stat-divider{display:none;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .hero-stats{gap:1.5rem;}
+  .footer-top{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .about-img-accent,.about-stats-card{display:none;}
+}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column;}
+  .btn-fill,.btn-outline{justify-content:center;text-align:center;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ── NAV ── -->
+<header id="navbar">
+  <a href="#" class="nav-logo">Care<span class="logo-dot">Plus</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#doctors">Doctors</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Book Appointment</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav id="mobile-menu">
+  <a href="#services" class="mob-link">Services</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#doctors" class="mob-link">Doctors</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="#contact" class="mob-link" style="color:var(--aqua)">Book Appointment</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="ecg-wrap">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path class="ecg-path" d="M0,60 L120,60 L160,60 L180,10 L200,110 L220,10 L240,60 L280,60 L320,60 L360,60 L400,60 L440,60 L460,60 L480,15 L500,105 L520,15 L540,60 L580,60 L620,60 L660,60 L700,60 L720,60 L740,60 L760,20 L780,100 L800,20 L820,60 L860,60 L900,60 L940,60 L980,60 L1000,60 L1020,60 L1040,18 L1060,102 L1080,18 L1100,60 L1140,60 L1180,60 L1220,60 L1260,60 L1300,60 L1320,60 L1340,60 L1360,20 L1380,100 L1400,20 L1420,60 L1440,60
+             M1440,60 L1560,60 L1600,60 L1620,10 L1640,110 L1660,10 L1680,60 L1720,60 L1760,60 L1800,60 L1840,60 L1880,60" />
+    </svg>
+  </div>
+  <div class="hero-glow"></div>
+  <div class="hero-dots"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow reveal">Advanced Healthcare &amp; Wellness</div>
+
+      <h1 class="hero-h1 reveal">
+        Your Health,<br/>Our <em>Highest</em><br/>Commitment
+      </h1>
+
+      <p class="hero-body reveal">
+        CarePlus Hospital combines world-class specialists, cutting-edge medical
+        technology, and compassionate care — putting you at the centre of
+        everything we do, every day.
+      </p>
+
+      <div class="hero-btns reveal">
+        <a href="#contact" class="btn-fill">
+          <i class="fas fa-calendar-check"></i> Book Appointment
+        </a>
+        <a href="#about" class="btn-outline">
+          <i class="fas fa-play"></i> Our Story
+        </a>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div>
+          <div class="hero-stat-n">15<sup>+</sup></div>
+          <div class="hero-stat-l">Years of care</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">50<sup>+</sup></div>
+          <div class="hero-stat-l">Specialists</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">98<sup>%</sup></div>
+          <div class="hero-stat-l">Patient satisfaction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right reveal-right">
+      <div class="hero-img-frame">
+        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=900&auto=format&fit=crop" alt="CarePlus Hospital"/>
+        <div class="hero-badge">
+          <div class="hero-badge-icon"><i class="fas fa-award"></i></div>
+          <div>
+            <div class="hero-badge-text">Accredited Hospital</div>
+            <div class="hero-badge-sub">ISO 9001:2015 Certified</div>
+          </div>
+        </div>
+        <div class="hero-badge2">
+          <div class="hero-badge2-dot"></div>
+          <div class="hero-badge2-text">24 / 7 Emergency Care</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div id="trust">
+  <div class="trust-item"><i class="fas fa-shield-halved"></i><span>Fully Licensed &amp; Accredited</span></div>
+  <div class="trust-item"><i class="fas fa-microscope"></i><span>State-of-the-Art Labs</span></div>
+  <div class="trust-item"><i class="fas fa-clock"></i><span>24 / 7 Emergency Unit</span></div>
+  <div class="trust-item"><i class="fas fa-hand-holding-heart"></i><span>Compassionate Patient Care</span></div>
+  <div class="trust-item"><i class="fas fa-file-medical"></i><span>Digital Health Records</span></div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section class="s" id="services">
+  <div class="s-head center reveal">
+    <div class="eyebrow">What We Offer</div>
+    <h2 class="s-title">Comprehensive <em>Medical Services</em></h2>
+    <p class="s-sub">From preventive care to complex surgery, our multidisciplinary teams deliver excellence across every medical specialty.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-user-doctor"></i></div>
+      <div class="svc-title">General &amp; Specialist Care</div>
+      <p class="svc-desc">Board-certified physicians and subspecialists available for consultations, second opinions, and ongoing management.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-truck-medical"></i></div>
+      <div class="svc-title">Emergency &amp; Trauma Unit</div>
+      <p class="svc-desc">A fully equipped, round-the-clock emergency department with rapid triage and advanced life-support systems.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-heart-pulse"></i></div>
+      <div class="svc-title">Cardiology &amp; Cardiac Surgery</div>
+      <p class="svc-desc">Minimally invasive procedures, ECGs, echocardiography, and full cardiac rehabilitation programmes.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-x-ray"></i></div>
+      <div class="svc-title">Diagnostics &amp; Imaging</div>
+      <p class="svc-desc">MRI, CT, PET scans, ultrasound, and a fully digital pathology laboratory with same-day results.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-baby"></i></div>
+      <div class="svc-title">Paediatrics &amp; Neonatology</div>
+      <p class="svc-desc">Dedicated child health services from newborn intensive care through to adolescent medicine.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-brain"></i></div>
+      <div class="svc-title">Neurology &amp; Neurosurgery</div>
+      <p class="svc-desc">Advanced neurological diagnostics, stroke intervention, and complex brain and spine surgery.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-bone"></i></div>
+      <div class="svc-title">Orthopaedics &amp; Rehabilitation</div>
+      <p class="svc-desc">Joint replacement, sports injury management, and structured physiotherapy programmes.</p>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon"><i class="fas fa-pills"></i></div>
+      <div class="svc-title">Pharmacy &amp; Dispensary</div>
+      <p class="svc-desc">In-house pharmacy with licensed pharmacists, 24-hour dispensing, and home-delivery options.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="s s-alt" id="about">
+  <div class="about-wrap">
+    <div class="about-img-col reveal-left">
+      <div class="about-img-main">
+        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=900&auto=format&fit=crop" alt="Our team"/>
+      </div>
+      <div class="about-img-accent">
+        <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?q=80&w=600&auto=format&fit=crop" alt="Surgery"/>
+      </div>
+      <div class="about-stats-card">
+        <div class="about-stat-n">30k<span>+</span></div>
+        <div class="about-stat-l">Patients served</div>
+      </div>
+    </div>
+
+    <div class="about-text reveal-right">
+      <div class="eyebrow">Our Story</div>
+      <h2 class="s-title">Fifteen Years of <em>Trusted Care</em></h2>
+      <div style="height:1rem"></div>
+      <p>Founded in 2009, CarePlus Hospital was built on a single belief: that world-class healthcare should be <strong>accessible, dignified, and centred on the patient</strong>. From a single outpatient clinic, we have grown into a full-service tertiary hospital serving tens of thousands of patients annually.</p>
+      <p>Our medical team holds qualifications from leading institutions across Nigeria, the United Kingdom, and North America. We invest continuously in technology and training so that our patients receive the most current, evidence-based treatment available.</p>
+      <div class="about-checks">
+        <div class="check-item">International standard operating theatres</div>
+        <div class="check-item">Electronic patient records &amp; telehealth portal</div>
+        <div class="check-item">Dedicated patient liaison officers</div>
+        <div class="check-item">Transparent, itemised billing</div>
+        <div class="check-item">Multilingual patient support staff</div>
+      </div>
+      <a href="#contact" class="btn-fill" style="align-self:flex-start;display:inline-flex;">
+        <i class="fas fa-calendar-check"></i> Book a Consultation
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAND ── -->
+<div id="stats-band">
+  <div class="s-head center reveal" style="margin-bottom:3rem;">
+    <div class="eyebrow" style="justify-content:center;">By The Numbers</div>
+    <h2 class="s-title" style="color:#fff;">The Care That <em>Speaks for Itself</em></h2>
+  </div>
+  <div class="stats-inner">
+    <div class="stat-box reveal">
+      <div class="stat-num">30k<sup>+</sup></div>
+      <div class="stat-lbl">Patients served</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-box reveal">
+      <div class="stat-num">50<sup>+</sup></div>
+      <div class="stat-lbl">Specialist doctors</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-box reveal">
+      <div class="stat-num">15<sup>+</sup></div>
+      <div class="stat-lbl">Years of service</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-box reveal">
+      <div class="stat-num">98<sup>%</sup></div>
+      <div class="stat-lbl">Patient satisfaction</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DOCTORS ── -->
+<section class="s" id="doctors">
+  <div class="s-head center reveal">
+    <div class="eyebrow">Our Medical Team</div>
+    <h2 class="s-title">Meet Our <em>Specialists</em></h2>
+    <p class="s-sub">Fellowship-trained physicians dedicated to delivering the highest standard of diagnosis and treatment.</p>
+  </div>
+  <div class="doctors-grid">
+    <div class="doc-card reveal">
+      <div class="doc-img">
+        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop" alt="Dr. Sarah Johnson"/>
+        <div class="doc-overlay"></div>
+        <span class="doc-spec">Cardiology</span>
+      </div>
+      <div class="doc-body">
+        <div class="doc-name">Dr. Sarah Johnson</div>
+        <div class="doc-role">Senior Cardiologist &amp; Cardiac Surgeon</div>
+        <div class="doc-socials">
+          <a href="#" class="doc-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-envelope"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-stethoscope"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-img">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop" alt="Dr. Michael Lee"/>
+        <div class="doc-overlay"></div>
+        <span class="doc-spec">Neurology</span>
+      </div>
+      <div class="doc-body">
+        <div class="doc-name">Dr. Michael Lee</div>
+        <div class="doc-role">Consultant Neurologist</div>
+        <div class="doc-socials">
+          <a href="#" class="doc-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-envelope"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-stethoscope"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-img">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&auto=format&fit=crop" alt="Dr. Emily Davis"/>
+        <div class="doc-overlay"></div>
+        <span class="doc-spec">Paediatrics</span>
+      </div>
+      <div class="doc-body">
+        <div class="doc-name">Dr. Emily Davis</div>
+        <div class="doc-role">Consultant Paediatrician &amp; Neonatologist</div>
+        <div class="doc-socials">
+          <a href="#" class="doc-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-envelope"></i></a>
+          <a href="#" class="doc-social"><i class="fas fa-stethoscope"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="s s-alt" id="testimonials">
+  <div class="s-head center reveal">
+    <div class="eyebrow">Patient Stories</div>
+    <h2 class="s-title">What Our Patients <em>Say</em></h2>
+    <p class="s-sub">Real experiences from the people who matter most — our patients and their families.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">From the moment I arrived, the staff made me feel safe and heard. My cardiac procedure was explained step by step and the outcome exceeded my expectations. CarePlus gave me my life back.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Adaeze Okonkwo</div>
+          <div class="testi-stars">★★★★★ &nbsp;Cardiology Patient</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Dr. Lee's diagnosis changed everything. After months of uncertainty at other hospitals, CarePlus identified the issue and had a treatment plan within two days. The level of expertise here is remarkable.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">B</div>
+        <div>
+          <div class="testi-name">Babatunde Adeleke</div>
+          <div class="testi-stars">★★★★★ &nbsp;Neurology Patient</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Our newborn spent two weeks in the NICU. The team's professionalism, round-the-clock communication, and genuine warmth carried our family through the most difficult period of our lives. Eternal gratitude.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">C</div>
+        <div>
+          <div class="testi-name">Chidinma Eze</div>
+          <div class="testi-stars">★★★★★ &nbsp;Neonatology Family</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="s" id="contact">
+  <div class="s-head reveal">
+    <div class="eyebrow">Get In Touch</div>
+    <h2 class="s-title">Book an <em>Appointment</em></h2>
+    <p class="s-sub">Speak to our patient services team or complete the form — we'll confirm your slot within 24 hours.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-left reveal-left">
+      <p>Whether you need a routine check-up, a specialist consultation, or urgent care advice, our team is ready. Fill in the form or reach us directly through the details below.</p>
+      <div class="contact-details">
+        <div class="c-detail">
+          <div class="c-icon"><i class="fas fa-location-dot"></i></div>
+          <div>
+            <div class="c-label">Address</div>
+            <div class="c-val">14 Hospital Road, Victoria Island, Lagos</div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <div class="c-label">Phone</div>
+            <div class="c-val">+234 (0) 800 CAREPLUS</div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-val">appointments@careplus.ng</div>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="c-label">Hours</div>
+            <div class="c-val">Emergency: 24 / 7 &nbsp;·&nbsp; OPD: Mon–Sat, 8am–6pm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-right">
+      <div class="contact-form">
+        <h3>Request an Appointment</h3>
+        <p>Complete the form and we'll be in touch within one business day.</p>
+        <form id="appointmentForm">
+          <!-- Web3Forms: delivers submissions to awesomepius57@gmail.com -->
+          <input type="hidden" name="access_key" value="db812cac-4f16-4be1-9a1d-f0c8ea9a9ced"/>
+          <input type="hidden" name="subject" value="New Appointment Request — CarePlus Hospital"/>
+          <input type="hidden" name="from_name" value="CarePlus Hospital Website"/>
+          <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off"/>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="e.g. Adaeze Okonkwo" required/>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" placeholder="you@email.com" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="+234 800 000 0000" required/>
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select>
+                <option value="" disabled selected>Select department</option>
+                <option>General Medicine</option>
+                <option>Cardiology</option>
+                <option>Neurology</option>
+                <option>Paediatrics</option>
+                <option>Orthopaedics</option>
+                <option>Emergency</option>
+                <option>Diagnostics</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Describe Your Concern</label>
+            <textarea placeholder="Briefly describe your symptoms or the reason for your visit…"></textarea>
+          </div>
+          <div id="formMsg"></div>
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="currentColor" stroke="none"/></svg>
+            Submit Appointment Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="brand-name">Care<span>Plus</span> Hospital</div>
+      <p>Delivering compassionate, world-class healthcare in Nigeria since 2009. Your health is our highest commitment.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">General Medicine</a></li>
+        <li><a href="#services">Cardiology</a></li>
+        <li><a href="#services">Neurology</a></li>
+        <li><a href="#services">Paediatrics</a></li>
+        <li><a href="#services">Diagnostics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hospital</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#doctors">Our Doctors</a></li>
+        <li><a href="#testimonials">Patient Stories</a></li>
+        <li><a href="#contact">Careers</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Emergency</h4>
+      <ul>
+        <li><a href="tel:+2348000000000">+234 800 CAREPLUS</a></li>
+        <li><a href="#">Emergency Unit</a></li>
+        <li><a href="#">Ambulance Service</a></li>
+        <li><a href="#">Telehealth Portal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CarePlus Hospital. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Accreditation</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── PROGRESS ── */
+window.addEventListener('scroll',function(){
+  const total=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('progress').style.width=(window.scrollY/total*100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+/* ── HAMBURGER ── */
+const ham=document.getElementById('hamburger');
+const mob=document.getElementById('mobile-menu');
+ham.addEventListener('click',function(){
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mob-link').forEach(a=>{
+  a.addEventListener('click',function(){
+    ham.classList.remove('open');
+    mob.classList.remove('open');
+    document.body.style.overflow='';
+  });
+});
+
+/* ── REVEAL ── */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*80);
+      ro.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>ro.observe(el));
+
+/* ── HERO REVEALS ON LOAD ── */
+window.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('#hero .reveal,#hero .reveal-right').forEach(function(el,i){
+    setTimeout(()=>el.classList.add('visible'),150+i*160);
+  });
+});
+
+/* ── FORM ── */
+document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn  = this.querySelector('.btn-submit');
+  const msg  = document.getElementById('formMsg');
+
+  // Collect field values
+  const fields = this.querySelectorAll('input, select, textarea');
+  const name     = fields[0].value.trim();
+  const email    = fields[1].value.trim();
+  const phone    = fields[2].value.trim();
+  const dept     = fields[3].value;
+  const concern  = fields[4].value.trim();
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M12 2a10 10 0 1 0 0 20"/></svg> Sending…';
+  msg.style.display = 'none';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key:  'db812cac-4f16-4be1-9a1d-f0c8ea9a9ced', // Web3Forms key tied to awesomepius57@gmail.com
+        subject:     `New Appointment Request — ${dept || 'General'} — ${name}`,
+        from_name:   'CarePlus Hospital Website',
+        replyto:     email,
+        to:          'awesomepius57@gmail.com',
+        botcheck:    '',
+        // Message body shown in your inbox
+        message: `
+New appointment request from the CarePlus website.
+
+──────────────────────────
+Patient Name   : ${name}
+Email          : ${email}
+Phone          : ${phone}
+Department     : ${dept || 'Not specified'}
+──────────────────────────
+Concern / Notes:
+${concern || 'None provided'}
+──────────────────────────
+
+Reply directly to this email to reach the patient.
+        `.trim()
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      // Success
+      msg.style.cssText = 'display:block;padding:.8rem 1rem;background:rgba(34,213,90,.12);border:1px solid rgba(34,213,90,.3);border-radius:8px;color:#22d55a;font-size:.82rem;margin-bottom:1rem;';
+      msg.textContent = '✓ Appointment request sent! We will contact you within 24 hours.';
+      this.reset();
+      setTimeout(() => { msg.style.display = 'none'; }, 8000);
+    } else {
+      throw new Error('Submission failed');
+    }
+
+  } catch (err) {
+    // Fallback — open the user's mail client so the request is never lost
+    const mailBody = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nDepartment: ${dept}\n\n${concern}`
+    );
+    window.open(
+      `mailto:awesomepius57@gmail.com?subject=${encodeURIComponent('Appointment Request – ' + name)}&body=${mailBody}`,
+      '_blank'
+    );
+    msg.style.cssText = 'display:block;padding:.8rem 1rem;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.3);border-radius:8px;color:#f5c400;font-size:.82rem;margin-bottom:1rem;';
+    msg.textContent = '📧 Opening your email client to send directly — please hit Send in the window that appears.';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="currentColor" stroke="none"/></svg> Submit Appointment Request';
+  }
+});
+
+/* spin keyframe */
+(function(){
+  const s = document.createElement('style');
+  s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+  document.head.appendChild(s);
+})();
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
